@@ -16,6 +16,13 @@ builder.Services.AddDbContext<HotelReservationDBContext>(options =>
 });
 builder.Services.AddScoped<IHotelRepository, SqlHotelRepository>();
 builder.Services.AddScoped<ICustomerRepository,SqlCustomerRepository>();
+builder.Services.AddScoped<IReservationRepository, SqlReservationRepository>();
+
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+    });
 
 var app = builder.Build();
 

@@ -4,6 +4,7 @@ using Hotel.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hotel.API.Migrations
 {
     [DbContext(typeof(HotelReservationDBContext))]
-    partial class HotelReservationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20250213163217_Update2")]
+    partial class Update2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -84,21 +86,31 @@ namespace Hotel.API.Migrations
 
             modelBuilder.Entity("Hotel.API.Models.Domain.Reservation", b =>
                 {
-                    b.HasOne("Hotel.API.Models.Domain.Customer", "Customer")
-                        .WithMany()
+                    b.HasOne("Hotel.API.Models.Domain.Customer", "customer")
+                        .WithMany("Reservations")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Hotel.API.Models.Domain.Hotel", "Hotel")
-                        .WithMany()
+                    b.HasOne("Hotel.API.Models.Domain.Hotel", "hotel")
+                        .WithMany("Reservations")
                         .HasForeignKey("HotelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Customer");
+                    b.Navigation("customer");
 
-                    b.Navigation("Hotel");
+                    b.Navigation("hotel");
+                });
+
+            modelBuilder.Entity("Hotel.API.Models.Domain.Customer", b =>
+                {
+                    b.Navigation("Reservations");
+                });
+
+            modelBuilder.Entity("Hotel.API.Models.Domain.Hotel", b =>
+                {
+                    b.Navigation("Reservations");
                 });
 #pragma warning restore 612, 618
         }

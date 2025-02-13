@@ -4,6 +4,7 @@ using Hotel.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hotel.API.Migrations
 {
     [DbContext(typeof(HotelReservationDBContext))]
-    partial class HotelReservationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20250213163931_Update3")]
+    partial class Update3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -85,13 +87,13 @@ namespace Hotel.API.Migrations
             modelBuilder.Entity("Hotel.API.Models.Domain.Reservation", b =>
                 {
                     b.HasOne("Hotel.API.Models.Domain.Customer", "Customer")
-                        .WithMany()
+                        .WithMany("Reservations")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Hotel.API.Models.Domain.Hotel", "Hotel")
-                        .WithMany()
+                        .WithMany("Reservations")
                         .HasForeignKey("HotelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -99,6 +101,16 @@ namespace Hotel.API.Migrations
                     b.Navigation("Customer");
 
                     b.Navigation("Hotel");
+                });
+
+            modelBuilder.Entity("Hotel.API.Models.Domain.Customer", b =>
+                {
+                    b.Navigation("Reservations");
+                });
+
+            modelBuilder.Entity("Hotel.API.Models.Domain.Hotel", b =>
+                {
+                    b.Navigation("Reservations");
                 });
 #pragma warning restore 612, 618
         }

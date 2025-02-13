@@ -15,7 +15,7 @@ namespace HotelReservation.API.Repositories
 
         public async Task<Reservation> AddReservationAsync(Reservation reservation)
         {
-            reservation.Id = new Guid();
+            reservation.Id = Guid.NewGuid();
             await hotelReservationDBContext.Reservations.AddAsync(reservation);
             await hotelReservationDBContext.SaveChangesAsync();
             return reservation;
@@ -33,17 +33,24 @@ namespace HotelReservation.API.Repositories
 
         public async Task<IEnumerable<Reservation>> GetAllReservations()
         {
-            return await hotelReservationDBContext.Reservations.ToListAsync();
+            return await hotelReservationDBContext.Reservations
+                .Include(x => x.Hotel)
+                .Include(x => x.Customer)
+                .ToListAsync();
         }
 
         public async Task<Reservation> GetReservation(Guid id)
         {
-            var res = await hotelReservationDBContext.Reservations.FirstOrDefaultAsync(r => r.Id == id);
+            var res = await hotelReservationDBContext.Reservations
+                .Include(x => x.Hotel)
+                .Include(x => x.Customer)
+                .FirstOrDefaultAsync(r => r.Id == id);
             return res;
         }
 
         public async Task<Reservation> UpdateReservationAsync(Guid id, Reservation reservation)
         {
+            reservation.Id = id;
             var existingReservation = await hotelReservationDBContext.Reservations.FirstOrDefaultAsync(r => r.Id == id);
             if (existingReservation == null)
                 return null;

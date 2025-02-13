@@ -4,6 +4,7 @@ using Hotel.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hotel.API.Migrations
 {
     [DbContext(typeof(HotelReservationDBContext))]
-    partial class HotelReservationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20250213140711_Update1")]
+    partial class Update1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -84,21 +86,21 @@ namespace Hotel.API.Migrations
 
             modelBuilder.Entity("Hotel.API.Models.Domain.Reservation", b =>
                 {
-                    b.HasOne("Hotel.API.Models.Domain.Customer", "Customer")
+                    b.HasOne("Hotel.API.Models.Domain.Customer", "customer")
                         .WithMany()
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Hotel.API.Models.Domain.Hotel", "Hotel")
+                    b.HasOne("Hotel.API.Models.Domain.Hotel", "hotel")
                         .WithMany()
                         .HasForeignKey("HotelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Customer");
+                    b.Navigation("customer");
 
-                    b.Navigation("Hotel");
+                    b.Navigation("hotel");
                 });
 #pragma warning restore 612, 618
         }
