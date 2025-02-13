@@ -58,5 +58,22 @@ namespace HotelReservation.API.Controllers
                 return NotFound();
             return Ok(hotel);
         }
+
+        [HttpPut]
+        [Route("{id:guid}")]
+        public async Task<IActionResult> UpdateHotel([FromRoute] Guid id, [FromBody] UpdateHotelRequest updateHotelRequest)
+        {
+            var newHotel = new Hotel.API.Models.Domain.Hotel()
+            {
+                Name = updateHotelRequest.Name,
+                NumberOfRooms = updateHotelRequest.NumberOfRooms,
+                RoomRent = updateHotelRequest.RoomRent
+            };
+            var existingHotl = await hotelRepository.UpdateHotelAsync(id, newHotel);
+            if (existingHotl == null)
+                return NotFound();
+
+            return Ok(newHotel);
+        }
     }
 }

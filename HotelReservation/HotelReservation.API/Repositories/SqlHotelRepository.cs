@@ -41,5 +41,18 @@ namespace HotelReservation.API.Repositories
             var res = await hotelReservationDBContext.Hotels.FirstOrDefaultAsync(h => h.Id == id);
             return res;
         }
+
+        public async Task<Hotel.API.Models.Domain.Hotel> UpdateHotelAsync(Guid id, Hotel.API.Models.Domain.Hotel hotel)
+        {
+            var existingHotel = await hotelReservationDBContext.Hotels.FirstOrDefaultAsync(hotel => hotel.Id == id);
+            if (existingHotel == null)
+                return null;
+            existingHotel.NumberOfRooms = hotel.NumberOfRooms;
+            existingHotel.RoomRent = hotel.RoomRent;
+            existingHotel.Name = hotel.Name;
+            await hotelReservationDBContext.SaveChangesAsync();
+            return existingHotel;
+        }
+
     }
 }
