@@ -1,4 +1,5 @@
 using Hotel.API.Data;
+using HotelReservation.API.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +14,7 @@ builder.Services.AddDbContext<HotelReservationDBContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("HotelReservation"));
 });
+builder.Services.AddScoped<IHotelRepository, SqlHotelRepository>();
 
 var app = builder.Build();
 

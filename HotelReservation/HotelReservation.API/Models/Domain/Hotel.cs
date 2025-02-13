@@ -6,6 +6,5 @@
         public string Name { get; set; }
         public double RoomRent { get; set; }
         public int NumberOfRooms { get; set; }
-        public IEnumerable<Reservation> Reservations { get; set; }
     }
 }
