@@ -38,6 +38,8 @@ namespace HotelReservation.API.Controllers
         [HttpPost]
         public async Task<IActionResult> AddHotelAsync(AddHotelRequest addHotelRequest)
         {
+            if (!ValidateAddHotelAsync(addHotelRequest))
+                return BadRequest(ModelState);
             var hotel = new Hotel.API.Models.Domain.Hotel()
             {
                 Name = addHotelRequest.Name,
@@ -75,5 +77,32 @@ namespace HotelReservation.API.Controllers
 
             return Ok(newHotel);
         }
+
+        #region Private methods
+        private bool ValidateAddHotelAsync(AddHotelRequest addHotelRequest)
+        {
+            if (addHotelRequest == null)
+            {
+                ModelState.AddModelError(nameof(addHotelRequest),
+                    $"Add hotel data is required.");
+                return false;
+            }
+            if (string.IsNullOrEmpty(addHotelRequest.Name))
+                ModelState.AddModelError(nameof(addHotelRequest.Name),
+                    $"{nameof(addHotelRequest.Name)} can not be null or empty or white space.");
+            if (addHotelRequest.NumberOfRooms <= 10)
+                ModelState.AddModelError(nameof(addHotelRequest.NumberOfRooms),
+                    $"{nameof(addHotelRequest.NumberOfRooms)} can not be negative or less than 10 rooms.");
+            if (addHotelRequest.RoomRent <= 0)
+                ModelState.AddModelError(nameof(addHotelRequest.RoomRent),
+                    $"{nameof(addHotelRequest.RoomRent)} can not be negative value.");
+
+            if(ModelState.ErrorCount > 0)
+                return false;
+
+            return true;
+        }
+
+        #endregion
     }
 }

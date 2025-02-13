@@ -15,7 +15,7 @@ namespace HotelReservation.API.Repositories
 
         public async Task<Customer> AddCustomerAsync(Customer customer)
         {
-            customer.Id = new Guid();
+            customer.Id = Guid.NewGuid();
             await hotelReservationDBContext.Customers.AddAsync(customer);
             await hotelReservationDBContext.SaveChangesAsync();
             return customer;
