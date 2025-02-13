@@ -13,7 +13,7 @@ namespace HotelReservation.API.Repositories
             this.hotelReservationDBContext = hotelReservationDBContext;
         }
 
-        public async Task<Customer> AddHotelAsync(Customer customer)
+        public async Task<Customer> AddCustomerAsync(Customer customer)
         {
             customer.Id = new Guid();
             await hotelReservationDBContext.Customers.AddAsync(customer);
@@ -21,7 +21,7 @@ namespace HotelReservation.API.Repositories
             return customer;
         }
 
-        public async Task<Customer> DeleteHotelAsync(Guid id)
+        public async Task<Customer> DeleteCustomerAsync(Guid id)
         {
             var customer = await hotelReservationDBContext.Customers.FirstOrDefaultAsync(x => x.Id == id);
             if (customer == null)
@@ -42,7 +42,7 @@ namespace HotelReservation.API.Repositories
             return res;
         }
 
-        public async Task<Customer> UpdateHotelAsync(Guid id, Customer hotel)
+        public async Task<Customer> UpdateCustomerAsync(Guid id, Customer hotel)
         {
             var existingHotel = await hotelReservationDBContext.Customers.FirstOrDefaultAsync(hotel => hotel.Id == id);
             if (existingHotel == null)

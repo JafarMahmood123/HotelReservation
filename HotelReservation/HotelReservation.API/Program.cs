@@ -15,6 +15,7 @@ builder.Services.AddDbContext<HotelReservationDBContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("HotelReservation"));
 });
 builder.Services.AddScoped<IHotelRepository, SqlHotelRepository>();
+builder.Services.AddScoped<ICustomerRepository,SqlCustomerRepository>();
 
 var app = builder.Build();
 

@@ -8,10 +8,10 @@ namespace HotelReservation.API.Repositories
 
         Task<Customer> GetCustomer(Guid id);
 
-        Task<Customer> AddHotelAsync(Customer hotel);
+        Task<Customer> AddCustomerAsync(Customer hotel);
 
-        Task<Customer> DeleteHotelAsync(Guid id);
+        Task<Customer> DeleteCustomerAsync(Guid id);
 
-        Task<Customer> UpdateHotelAsync(Guid id, Customer hotel);
+        Task<Customer> UpdateCustomerAsync(Guid id, Customer hotel);
     }
 }
