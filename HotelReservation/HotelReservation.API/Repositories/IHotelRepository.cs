@@ -2,6 +2,6 @@
 {
     public interface IHotelRepository
     {
-        IEnumerable<Hotel.API.Models.Domain.Hotel> GetHotels();
+        Task<IEnumerable<Hotel.API.Models.Domain.Hotel>> GetAllHotels();
     }
 }

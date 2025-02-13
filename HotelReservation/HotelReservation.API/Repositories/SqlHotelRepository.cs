@@ -1,4 +1,5 @@
 ﻿using Hotel.API.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace HotelReservation.API.Repositories
 {
@@ -11,9 +12,9 @@ namespace HotelReservation.API.Repositories
             this.hotelReservationDBContext = hotelReservationDBContext;
         }
 
-        public IEnumerable<Hotel.API.Models.Domain.Hotel> GetHotels()
+        public async Task<IEnumerable<Hotel.API.Models.Domain.Hotel>> GetAllHotels()
         {
-            return hotelReservationDBContext.Hotels.ToList();
+            return await hotelReservationDBContext.Hotels.ToListAsync();
         }
     }
 }

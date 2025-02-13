@@ -16,7 +16,7 @@ namespace HotelReservation.API.Controllers
         [HttpGet]
         public IActionResult GetAllHotels()
         {
-            var hotels = hotelRepository.GetHotels();
+            var hotels = hotelRepository.GetAllHotels();
             return Ok(hotels);
         }
     }
